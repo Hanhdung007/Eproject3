@@ -13,7 +13,6 @@ namespace Eproject3.Models
         public int ComplainId { get; set; }
         public string Description { get; set; } = null!;
         public int UsersId { get; set; }
-        public DateTime? DateComplaint { get; set; }
 
         public virtual User Users { get; set; } = null!;
         public virtual ICollection<Report> Reports { get; set; }

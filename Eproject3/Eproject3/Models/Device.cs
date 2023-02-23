@@ -12,10 +12,10 @@ namespace Eproject3.Models
 
         public string DevicesId { get; set; } = null!;
         public string DeviceName { get; set; } = null!;
-        public string DeviceType { get; set; } = null!;
-        public string SupplyFrom { get; set; } = null!;
+        public string? DeviceType { get; set; }
+        public string? BuyFrom { get; set; }
         public string? Status { get; set; }
-        public string DateMaintance { get; set; } = null!;
+        public DateTime? DateMaintance { get; set; }
         public string? DeviceImg { get; set; }
         public int LabsId { get; set; }
         public int SupplierId { get; set; }

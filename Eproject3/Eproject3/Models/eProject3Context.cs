@@ -16,19 +16,21 @@ namespace Eproject3.Models
         {
         }
 
-        public DbSet<Admin> Admins { get; set; }
-        public DbSet<Complain> Complains { get; set; }
-        public DbSet<Device> Devices { get; set; }
-        public DbSet<Lab> Labs { get; set; }
-        public DbSet<Report> Reports { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<User> Users { get; set; }
+        public virtual DbSet<Admin> Admins { get; set; } = null!;
+        public virtual DbSet<Calender> Calenders { get; set; } = null!;
+        public virtual DbSet<Complain> Complains { get; set; } = null!;
+        public virtual DbSet<Device> Devices { get; set; } = null!;
+        public virtual DbSet<Evt> Evts { get; set; } = null!;
+        public virtual DbSet<Lab> Labs { get; set; } = null!;
+        public virtual DbSet<Report> Reports { get; set; } = null!;
+        public virtual DbSet<Supplier> Suppliers { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=eProject3;uid=sa;pwd=1");
+                optionsBuilder.UseSqlServer("server=.\\SQLEXPRESS;database=eProject3;Trusted_connection=true");
             }
         }
 
@@ -41,11 +43,25 @@ namespace Eproject3.Models
                     .HasColumnName("ID");
             });
 
+            modelBuilder.Entity<Calender>(entity =>
+            {
+                entity.HasKey(e => e.CalenId)
+                    .HasName("PK__Calender__9FC7D533590802D7");
+
+                entity.ToTable("Calender");
+
+                entity.Property(e => e.CalenId).HasColumnName("Calen_ID");
+
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.StarTime).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<Complain>(entity =>
             {
-                entity.Property(e => e.ComplainId).HasColumnName("Complain_ID");
+                entity.ToTable("Complain");
 
-                entity.Property(e => e.DateComplaint).HasColumnType("datetime");
+                entity.Property(e => e.ComplainId).HasColumnName("Complain_ID");
 
                 entity.Property(e => e.Description).HasColumnName("description");
 
@@ -61,16 +77,14 @@ namespace Eproject3.Models
             modelBuilder.Entity<Device>(entity =>
             {
                 entity.HasKey(e => e.DevicesId)
-                    .HasName("PK__Devices__36D9232ACFD87551");
+                    .HasName("PK__Devices__36D9232A9D837E87");
 
                 entity.Property(e => e.DevicesId)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("Devices_ID");
 
-                entity.Property(e => e.DateMaintance)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.DateMaintance).HasColumnType("datetime");
 
                 entity.Property(e => e.LabsId).HasColumnName("Labs_ID");
 
@@ -89,10 +103,38 @@ namespace Eproject3.Models
                     .HasConstraintName("fk_supplier_Supplier_ID");
             });
 
+            modelBuilder.Entity<Evt>(entity =>
+            {
+                entity.HasKey(e => e.ReportId)
+                    .HasName("PK__Evt__30FA9DB1AD133928");
+
+                entity.ToTable("Evt");
+
+                entity.Property(e => e.ReportId).HasColumnName("Report_ID");
+
+                entity.Property(e => e.CalenId).HasColumnName("Calen_ID");
+
+                entity.Property(e => e.Content).IsUnicode(false);
+
+                entity.Property(e => e.EventDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Event_Date");
+
+                entity.Property(e => e.Minititle).IsUnicode(false);
+
+                entity.Property(e => e.Title).IsUnicode(false);
+
+                entity.HasOne(d => d.Calen)
+                    .WithMany(p => p.Evts)
+                    .HasForeignKey(d => d.CalenId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Calender_Calen_ID");
+            });
+
             modelBuilder.Entity<Lab>(entity =>
             {
                 entity.HasKey(e => e.LabsId)
-                    .HasName("PK__Labs__A74E271282CA010A");
+                    .HasName("PK__Labs__A74E2712C11F76F8");
 
                 entity.Property(e => e.LabsId).HasColumnName("Labs_ID");
 
@@ -101,6 +143,8 @@ namespace Eproject3.Models
 
             modelBuilder.Entity<Report>(entity =>
             {
+                entity.ToTable("report");
+
                 entity.Property(e => e.ReportId).HasColumnName("Report_ID");
 
                 entity.Property(e => e.ComplainId).HasColumnName("Complain_ID");
@@ -139,7 +183,9 @@ namespace Eproject3.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.UsersId)
-                    .HasName("PK__Users__EB68290D7E7EC2DB");
+                    .HasName("PK__users__EB68290DA6C2CA51");
+
+                entity.ToTable("users");
 
                 entity.Property(e => e.UsersId).HasColumnName("Users_ID");
             });
