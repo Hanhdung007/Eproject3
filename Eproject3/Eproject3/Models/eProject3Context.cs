@@ -46,7 +46,7 @@ namespace Eproject3.Models
             modelBuilder.Entity<Calender>(entity =>
             {
                 entity.HasKey(e => e.CalenId)
-                    .HasName("PK__Calender__9FC7D533590802D7");
+                    .HasName("PK__Calender__9FC7D5337B40A2B0");
 
                 entity.ToTable("Calender");
 
@@ -54,7 +54,17 @@ namespace Eproject3.Models
 
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
 
+                entity.Property(e => e.EventId).HasColumnName("Event_ID");
+
+                entity.Property(e => e.EventTitle).HasColumnName("Event_Title");
+
                 entity.Property(e => e.StarTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Event)
+                    .WithMany(p => p.Calenders)
+                    .HasForeignKey(d => d.EventId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Evt_Event_ID");
             });
 
             modelBuilder.Entity<Complain>(entity =>
@@ -105,14 +115,12 @@ namespace Eproject3.Models
 
             modelBuilder.Entity<Evt>(entity =>
             {
-                entity.HasKey(e => e.ReportId)
-                    .HasName("PK__Evt__30FA9DB1AD133928");
+                entity.HasKey(e => e.EventId)
+                    .HasName("PK__Evt__FD6BEFE4F154BB78");
 
                 entity.ToTable("Evt");
 
-                entity.Property(e => e.ReportId).HasColumnName("Report_ID");
-
-                entity.Property(e => e.CalenId).HasColumnName("Calen_ID");
+                entity.Property(e => e.EventId).HasColumnName("Event_ID");
 
                 entity.Property(e => e.Content).IsUnicode(false);
 
@@ -123,12 +131,6 @@ namespace Eproject3.Models
                 entity.Property(e => e.Minititle).IsUnicode(false);
 
                 entity.Property(e => e.Title).IsUnicode(false);
-
-                entity.HasOne(d => d.Calen)
-                    .WithMany(p => p.Evts)
-                    .HasForeignKey(d => d.CalenId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Calender_Calen_ID");
             });
 
             modelBuilder.Entity<Lab>(entity =>
