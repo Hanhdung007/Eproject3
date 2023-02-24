@@ -17,10 +17,9 @@ namespace Eproject3.Models
         }
 
         public virtual DbSet<Admin> Admins { get; set; } = null!;
-        public virtual DbSet<Calender> Calenders { get; set; } = null!;
         public virtual DbSet<Complain> Complains { get; set; } = null!;
         public virtual DbSet<Device> Devices { get; set; } = null!;
-        public virtual DbSet<Evt> Evts { get; set; } = null!;
+        public virtual DbSet<Event> Events { get; set; } = null!;
         public virtual DbSet<Lab> Labs { get; set; } = null!;
         public virtual DbSet<Report> Reports { get; set; } = null!;
         public virtual DbSet<Supplier> Suppliers { get; set; } = null!;
@@ -41,30 +40,6 @@ namespace Eproject3.Models
                 entity.Property(e => e.Id)
                     .HasMaxLength(50)
                     .HasColumnName("ID");
-            });
-
-            modelBuilder.Entity<Calender>(entity =>
-            {
-                entity.HasKey(e => e.CalenId)
-                    .HasName("PK__Calender__9FC7D5337B40A2B0");
-
-                entity.ToTable("Calender");
-
-                entity.Property(e => e.CalenId).HasColumnName("Calen_ID");
-
-                entity.Property(e => e.EndTime).HasColumnType("datetime");
-
-                entity.Property(e => e.EventId).HasColumnName("Event_ID");
-
-                entity.Property(e => e.EventTitle).HasColumnName("Event_Title");
-
-                entity.Property(e => e.StarTime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Event)
-                    .WithMany(p => p.Calenders)
-                    .HasForeignKey(d => d.EventId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Evt_Event_ID");
             });
 
             modelBuilder.Entity<Complain>(entity =>
@@ -113,24 +88,21 @@ namespace Eproject3.Models
                     .HasConstraintName("fk_supplier_Supplier_ID");
             });
 
-            modelBuilder.Entity<Evt>(entity =>
+            modelBuilder.Entity<Event>(entity =>
             {
-                entity.HasKey(e => e.EventId)
-                    .HasName("PK__Evt__FD6BEFE4F154BB78");
+                entity.ToTable("Event");
 
-                entity.ToTable("Evt");
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
 
-                entity.Property(e => e.EventId).HasColumnName("Event_ID");
+                entity.Property(e => e.LabsId).HasColumnName("Labs_ID");
 
-                entity.Property(e => e.Content).IsUnicode(false);
+                entity.Property(e => e.StarTime).HasColumnType("datetime");
 
-                entity.Property(e => e.EventDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Event_Date");
-
-                entity.Property(e => e.Minititle).IsUnicode(false);
-
-                entity.Property(e => e.Title).IsUnicode(false);
+                entity.HasOne(d => d.Labs)
+                    .WithMany(p => p.Events)
+                    .HasForeignKey(d => d.LabsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Labs");
             });
 
             modelBuilder.Entity<Lab>(entity =>

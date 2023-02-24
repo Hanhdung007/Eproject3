@@ -8,11 +8,13 @@ namespace Eproject3.Models
         public Lab()
         {
             Devices = new HashSet<Device>();
+            Events = new HashSet<Event>();
         }
 
         public int LabsId { get; set; }
         public string? LabsName { get; set; }
 
         public virtual ICollection<Device> Devices { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
     }
 }

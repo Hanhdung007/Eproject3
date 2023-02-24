@@ -45,7 +45,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -212,12 +212,11 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a asp-controller="Labs" asp-action="Index" class="nav-link active">
+          <li class="nav-item">
+            <a asp-controller="Labs" asp-action="Index" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Labs
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             @* <ul class="nav nav-treeview">
