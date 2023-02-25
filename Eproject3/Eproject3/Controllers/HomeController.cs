@@ -1,20 +1,30 @@
-﻿using Eproject3.Models;
+﻿using Eproject3.Data;
+using Eproject3.Helpers;
+using Eproject3.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+
 
 namespace Eproject3.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IDAL _idal;
+        private readonly eProject3Context db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IDAL idal, eProject3Context db)
         {
             _logger = logger;
+            _idal = idal;
+            this.db = db;
         }
 
         public IActionResult Index()
         {
+            var myevent = _idal.GetEvent(1);
+            //ViewData["Resources"] = JSONListHelper.GetResourceListJSONString(db.Labs.ToList());
+            //ViewData["Events"] = JSONListHelper.GetEventListJSONString(_idal.GetEvents()); 
             return View();
         }
 
@@ -27,6 +37,12 @@ namespace Eproject3.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public ViewResult PageNotFound()
+        {
+            Response.StatusCode = 404;
+            return View();
         }
     }
 }
