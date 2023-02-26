@@ -22,9 +22,8 @@ namespace Eproject3.Controllers
 
         public IActionResult Index()
         {
-            var myevent = _idal.GetEvent(1);
-            //ViewData["Resources"] = JSONListHelper.GetResourceListJSONString(db.Labs.ToList());
-            //ViewData["Events"] = JSONListHelper.GetEventListJSONString(_idal.GetEvents()); 
+            ViewData["Resources"] = JSONListHelper.GetResourceListJSONString(db.Labs.ToList());
+            ViewData["Events"] = JSONListHelper.GetEventListJSONString(db.Events.ToList());
             return View();
         }
 

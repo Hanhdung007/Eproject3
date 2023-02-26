@@ -5,43 +5,43 @@ using System.Threading.Tasks;
 
 namespace Eproject3.Helpers
 {
-    //public static class JSONListHelper
-    //{
-    //    public static string GetEventListJSONString(List<Models.Event> events)
-    //    {
-    //        var eventlist = new List<Event>();
-    //        foreach (var model in events)
-    //        {
-    //            var myevent = new Event()
-    //            {
-    //                id = model.Id,
-    //                start = model.StartTime,
-    //                end = model.EndTime,
-    //                resourceId = model.Lab.LabsId,
-    //                description = model.Description,
-    //                title = model.Name
-    //            };
-    //            eventlist.Add(myevent);
-    //        }
-    //        return System.Text.Json.JsonSerializer.Serialize(eventlist);
-    //    }
+    public static class JSONListHelper
+    {
+        public static string GetEventListJSONString(List<Models.Event> events)
+        {
+            var eventlist = new List<Event>();
+            foreach (var model in events)
+            {
+                var myevent = new Event()
+                {
+                    id = model.Id,
+                    start = model.StartTime,
+                    end = model.EndTime,
+                    resourceId = model.Lab.LabsId,
+                    description = model.Description,
+                    title = model.Name
+                };
+                eventlist.Add(myevent);
+            }
+            return System.Text.Json.JsonSerializer.Serialize(eventlist);
+        }
 
-    //    public static string GetResourceListJSONString(List<Models.Lab> labs)
-    //    {
-    //        var resourcelist = new List<Resource>();
+        public static string GetResourceListJSONString(List<Models.Lab> labs)
+        {
+            var resourcelist = new List<Resource>();
 
-    //        foreach (var loc in labs)
-    //        {
-    //            var resource = new Resource()
-    //            {
-    //                id = loc.LabsId,
-    //                title = loc.LabsName
-    //            };
-    //            resourcelist.Add(resource);
-    //        }
-    //        return System.Text.Json.JsonSerializer.Serialize(resourcelist);
-    //    }
-    //}
+            foreach (var la in labs)
+            {
+                var resource = new Resource()
+                {
+                    id = la.LabsId,
+                    title = la.LabsName
+                };
+                resourcelist.Add(resource);
+            }
+            return System.Text.Json.JsonSerializer.Serialize(resourcelist);
+        }
+    }
 
     public class Event
     {
