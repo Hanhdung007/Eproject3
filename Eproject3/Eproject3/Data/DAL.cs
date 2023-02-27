@@ -23,23 +23,17 @@ namespace Eproject3.Data
 
             public List<Event> GetEvents()
             {
-                return db.Events.ToList();
+                return db.Events.Include(c => c.Lab).ToList();
             }
-
-            //public List<Event> GetMyEvents(string userid)
-            //{
-            //    return db.Events.Where(x => x.User.Id == userid).ToList();
-            //}
 
             public Event GetEvent(int id)
             {
-                return db.Events.FirstOrDefault(x => x.Id == id);
+                return db.Events.Include(c => c.Lab).FirstOrDefault(x => x.Id == id);
             }
 
             public void CreateEvent(IFormCollection form)
             {
                 var labname = form["Lab"].ToString();
-                //var user = db.Users.FirstOrDefault(x => x.Id == form["UserId"].ToString());
                 var newevent = new Event(form, db.Labs.FirstOrDefault(x => x.LabsName == labname));
                 db.Events.Add(newevent);
                 db.SaveChanges();
@@ -51,7 +45,6 @@ namespace Eproject3.Data
                 var eventid = int.Parse(form["Event.Id"]);
                 var myevent = db.Events.FirstOrDefault(x => x.Id == eventid);
                 var lab = db.Labs.FirstOrDefault(x => x.LabsName == labname);
-                //var user = db.Users.FirstOrDefault(x => x.Id == form["UserId"].ToString());
                 myevent.UpdateEvent(form, lab);
                 db.Entry(myevent).State = EntityState.Modified;
                 db.SaveChanges();

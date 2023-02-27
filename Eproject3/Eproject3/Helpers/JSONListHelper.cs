@@ -18,8 +18,8 @@ namespace Eproject3.Helpers
                     start = model.StartTime,
                     end = model.EndTime,
                     resourceId = model.Lab.LabsId,
-                    description = model.Description,
-                    title = model.Name
+                    description = model.Name,
+                    title = model.Lab.LabsName
                 };
                 eventlist.Add(myevent);
             }
