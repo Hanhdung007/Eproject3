@@ -534,3 +534,8 @@ D:\eProject3\Eproject3\Eproject3\Eproject3\obj\Debug\net6.0\Eproject3.genruntime
 D:\eProject3\Eproject3\Eproject3\Eproject3\obj\Debug\net6.0\ref\Eproject3.dll
 D:\eProject3\Eproject3\Eproject3\Eproject3\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\eProject3\Eproject3\Eproject3\Eproject3\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Project\Eproject3\Eproject3\Eproject3\bin\Debug\net6.0\appsettings.Development.json
+D:\Project\Eproject3\Eproject3\Eproject3\bin\Debug\net6.0\appsettings.json
+D:\Project\Eproject3\Eproject3\Eproject3\bin\Debug\net6.0\Eproject3.staticwebassets.runtime.json
+D:\Project\Eproject3\Eproject3\Eproject3\bin\Debug\net6.0\Eproject3.exe
+D:\Project\Eproject3\Eproject3\Eproject3\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
