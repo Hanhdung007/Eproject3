@@ -7,30 +7,24 @@ namespace Eproject3.Models
 {
     public partial class eProject3Context : DbContext
     {
-        public eProject3Context()
-        {
-        }
-
         public eProject3Context(DbContextOptions<eProject3Context> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<Admin> Admins { get; set; } = null!;
-        public virtual DbSet<Complain> Complains { get; set; } = null!;
-        public virtual DbSet<Device> Devices { get; set; } = null!;
-        public virtual DbSet<Lab> Labs { get; set; } = null!;
-        public virtual DbSet<MaintainceDevice> MaintainceDevices { get; set; } = null!;
-        public virtual DbSet<Report> Reports { get; set; } = null!;
-        public virtual DbSet<Supplier> Suppliers { get; set; } = null!;
-        public virtual DbSet<User> Users { get; set; } = null!;
+        public DbSet<Admin> Admins { get; set; }
+        public DbSet<Complain> Complains { get; set; }
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<Lab> Labs { get; set; }
+        public DbSet<Report> Reports { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.;Database=eProject3;uid=sa;pwd=1");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-9R59LGC\\TRONG;Database=eProject3;uid=sa;pwd=160803");
             }
         }
 
@@ -41,53 +35,42 @@ namespace Eproject3.Models
                 entity.Property(e => e.Id)
                     .HasMaxLength(50)
                     .HasColumnName("ID");
-
-                entity.Property(e => e.Role).IsUnicode(false);
             });
 
             modelBuilder.Entity<Complain>(entity =>
             {
-                entity.HasKey(e => e.ComplainId)
-                    .HasName("PK__Complain__46A70C1311BE92E1");
-
-                entity.ToTable("Complain");
-
                 entity.Property(e => e.ComplainId).HasColumnName("Complain_ID");
 
-                entity.Property(e => e.DateCp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Date_CP");
+                entity.Property(e => e.DateComplaint).HasColumnType("datetime");
 
                 entity.Property(e => e.Description).HasColumnName("description");
 
-                entity.Property(e => e.Id)
-                    .HasMaxLength(50)
-                    .HasColumnName("ID");
+                entity.Property(e => e.UsersId).HasColumnName("Users_ID");
 
-                entity.Property(e => e.StatusCp).HasColumnName("Status_CP");
-
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.Users)
                     .WithMany(p => p.Complains)
-                    .HasForeignKey(d => d.Id)
+                    .HasForeignKey(d => d.UsersId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_admins_Admin_ID");
+                    .HasConstraintName("fk_users_Users_ID");
             });
 
             modelBuilder.Entity<Device>(entity =>
             {
                 entity.HasKey(e => e.DevicesId)
-                    .HasName("PK__Devices__36D9232AA8E38AC4");
+                    .HasName("PK__Devices__36D9232ACFD87551");
 
                 entity.Property(e => e.DevicesId)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("Devices_ID");
 
-                entity.Property(e => e.DateMaintance).HasColumnType("datetime");
+                entity.Property(e => e.DateMaintance)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LabsId).HasColumnName("Labs_ID");
 
-                entity.Property(e => e.SupplierId).HasColumnName("Supplier_ID");
+                entity.Property(e => e.Supplier_ID).HasColumnName("Supplier_ID");
 
                 entity.HasOne(d => d.Labs)
                     .WithMany(p => p.Devices)
@@ -97,7 +80,7 @@ namespace Eproject3.Models
 
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.Devices)
-                    .HasForeignKey(d => d.SupplierId)
+                    .HasForeignKey(d => d.Supplier_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_supplier_Supplier_ID");
             });
@@ -105,54 +88,15 @@ namespace Eproject3.Models
             modelBuilder.Entity<Lab>(entity =>
             {
                 entity.HasKey(e => e.LabsId)
-                    .HasName("PK__Labs__A74E2712ADF58B18");
+                    .HasName("PK__Labs__A74E271282CA010A");
 
                 entity.Property(e => e.LabsId).HasColumnName("Labs_ID");
 
                 entity.Property(e => e.LabsName).IsUnicode(false);
             });
 
-            modelBuilder.Entity<MaintainceDevice>(entity =>
-            {
-                entity.HasKey(e => e.MaintnId)
-                    .HasName("PK__Maintain__156624B0A0E424A6");
-
-                entity.Property(e => e.MaintnId).HasColumnName("Maintn_ID");
-
-                entity.Property(e => e.Creater).IsUnicode(false);
-
-                entity.Property(e => e.Date).HasColumnType("datetime");
-
-                entity.Property(e => e.Descriptions).IsUnicode(false);
-
-                entity.Property(e => e.DevicesId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("Devices_ID");
-
-                entity.Property(e => e.Id)
-                    .HasMaxLength(50)
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.Reason).IsUnicode(false);
-
-                entity.HasOne(d => d.Devices)
-                    .WithMany(p => p.MaintainceDevices)
-                    .HasForeignKey(d => d.DevicesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_device_Devices_ID");
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithMany(p => p.MaintainceDevices)
-                    .HasForeignKey(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_admin_ID");
-            });
-
             modelBuilder.Entity<Report>(entity =>
             {
-                entity.ToTable("report");
-
                 entity.Property(e => e.ReportId).HasColumnName("Report_ID");
 
                 entity.Property(e => e.ComplainId).HasColumnName("Complain_ID");
@@ -183,7 +127,7 @@ namespace Eproject3.Models
 
             modelBuilder.Entity<Supplier>(entity =>
             {
-                entity.Property(e => e.SupplierId).HasColumnName("Supplier_ID");
+                entity.Property(e => e.Supplier_ID).HasColumnName("Supplier_ID");
 
                 entity.Property(e => e.SupplierName).IsUnicode(false);
             });
@@ -191,9 +135,7 @@ namespace Eproject3.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.UsersId)
-                    .HasName("PK__users__EB68290D8BC0D994");
-
-                entity.ToTable("users");
+                    .HasName("PK__Users__EB68290D7E7EC2DB");
 
                 entity.Property(e => e.UsersId).HasColumnName("Users_ID");
             });

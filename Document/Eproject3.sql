@@ -54,14 +54,10 @@ create table Complain
 (
 	Complain_ID int primary key identity,
 	description nvarchar(max) not null,
-	Reason nvarchar(max) not null,
-	Status_CP nvarchar(max) not null,
-	Date_CP datetime not null,
-	Category nvarchar(max) not null,
-	ID nvarchar(50) not null,
-	CONSTRAINT fk_admins_Admin_ID
-    FOREIGN KEY (ID)
-    REFERENCES Admins (ID)
+	Users_ID int not null,
+	CONSTRAINT fk_users_Users_ID
+	FOREIGN KEY (Users_ID)
+	REFERENCES users (Users_ID)
 )
 go
 create table report 
@@ -80,20 +76,4 @@ create table report
 	REFERENCES Devices (Devices_ID)
 )
 go 
-create table MaintainceDevices
-(
-	Maintn_ID int primary key identity,
-	Descriptions varchar(max)not null,
-	Reason varchar(max)not null,
-	Date datetime not null,
-	Creater varchar(max) not null,
-	Devices_ID varchar(50) not null,
-	ID nvarchar(50) not null,
-	CONSTRAINT fk_device_Devices_ID
-	FOREIGN KEY (Devices_ID)
-	REFERENCES Devices (Devices_ID),
-	CONSTRAINT fk_admin_ID
-	FOREIGN KEY (ID)
-	REFERENCES Admins(ID)
-)
 
